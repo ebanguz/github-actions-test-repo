@@ -1,40 +1,45 @@
-name: Tag on PR Merge
+name: Tag from Odoo Manifest
 
 on:
   push:
     branches:
-      - main
-
-permissions:
-  contents: write  
+      - main  # or your release branch
 
 jobs:
   tag:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
+      # 1. Checkout repository
+      - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # needed so we can check existing tags
 
-      - name: Set up Git user
+      # 2. Extract version from __manifest__.py
+      - name: Get version from manifest
+        id: get_version
+        run: |
+          VERSION=$(grep -Po "(?<=\'version\':\s\')[^']+" __manifest__.py)
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+          echo "Detected version: $VERSION"
+
+      # 3. Check if tag already exists
+      - name: Check if tag exists
+        id: check_tag
+        run: |
+          if git rev-parse "v${VERSION}" >/dev/null 2>&1; then
+            echo "Tag already exists"
+            echo "exists=true" >> $GITHUB_ENV
+          else
+            echo "Tag does not exist"
+            echo "exists=false" >> $GITHUB_ENV
+          fi
+
+      # 4. Create and push tag only if new
+      - name: Create tag
+        if: env.exists == 'false'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-
-      - name: Get latest commit message
-        id: commit_msg
-        run: |
-          commit_msg="$(git log -1 --pretty=%B)"
-          echo "msg<<EOF" >> $GITHUB_OUTPUT
-          echo "$commit_msg" >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
-
-      - name: Check for PR merge
-        if: contains(steps.commit_msg.outputs.msg, 'Merge pull request')
-        run: echo "PR merge detected, creating tag."
-
-      - name: Create tag
-        if: contains(steps.commit_msg.outputs.msg, 'Merge pull request')
-        run: |
-          TAG="pr-merge-$(date +'%Y%m%d-%H%M%S')"
-          git tag $TAG
-          git push origin $TAG
+          git tag v${VERSION}
+          git push origin v${VERSION}
