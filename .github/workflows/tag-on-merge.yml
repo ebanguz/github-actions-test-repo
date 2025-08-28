@@ -20,14 +20,17 @@ jobs:
       - name: Get latest commit message
         id: commit_msg
         run: |
-          echo "msg=$(git log -1 --pretty=%B)" >> $GITHUB_OUTPUT
+          commit_msg="$(git log -1 --pretty=%B)"
+          echo "msg<<EOF" >> $GITHUB_OUTPUT
+          echo "$commit_msg" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
 
       - name: Check for PR merge
-        if: startsWith(steps.commit_msg.outputs.msg, 'Merge pull request')
+        if: contains(steps.commit_msg.outputs.msg, 'Merge pull request')
         run: echo "PR merge detected, creating tag."
 
       - name: Create tag
-        if: startsWith(steps.commit_msg.outputs.msg, 'Merge pull request')
+        if: contains(steps.commit_msg.outputs.msg, 'Merge pull request')
         run: |
           TAG="pr-merge-$(date +'%Y%m%d-%H%M%S')"
           git tag $TAG
