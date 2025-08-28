@@ -3,6 +3,7 @@
 	<data>
 
 		<record id="mufa_form_view" model="ir.ui.view"    >
+			
 			<field name="name">nap.mufa.form</field>
 			<field name="model">nap.mufa</field>
 			<field name="arch" type="xml">
