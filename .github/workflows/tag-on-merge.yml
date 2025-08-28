@@ -1,0 +1,34 @@
+name: Tag on PR Merge
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  tag:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Git user
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Get latest commit message
+        id: commit_msg
+        run: |
+          echo "msg=$(git log -1 --pretty=%B)" >> $GITHUB_OUTPUT
+
+      - name: Check for PR merge
+        if: startsWith(steps.commit_msg.outputs.msg, 'Merge pull request')
+        run: echo "PR merge detected, creating tag."
+
+      - name: Create tag
+        if: startsWith(steps.commit_msg.outputs.msg, 'Merge pull request')
+        run: |
+          TAG="pr-merge-$(date +'%Y%m%d-%H%M%S')"
+          git tag $TAG
+          git push origin $TAG
