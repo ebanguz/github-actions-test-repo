@@ -8,7 +8,7 @@
 Long description of module's purpose
     """,
 
-	'author'     :"My Company of course",
+	'author'     :"My Company of course r",
 	'website'    :"https://www.yourcompany.com",
 
 	# Categories can be used to filter modules in modules listing
