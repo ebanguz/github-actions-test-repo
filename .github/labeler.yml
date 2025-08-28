@@ -1,0 +1,38 @@
+# Auto-label PRs for an Odoo module project
+
+models:
+  - "*/models/**"
+
+views:
+  - "*/views/**"
+  - "*/static/src/xml/**"
+
+controllers:
+  - "*/controllers/**"
+
+security:
+  - "*/security/**"
+
+data:
+  - "*/data/**"
+
+tests:
+  - "*/tests/**"
+  - "**/*.spec.py"
+  - "**/test_*.py"
+
+manifests:
+  - "*/__manifest__.py"
+
+static:
+  - "*/static/**"
+  - "*/static/src/**"
+  - "*/static/description/**"
+
+docs:
+  - "**/*.md"
+  - "docs/**"
+
+github-actions:
+  - ".github/workflows/**"
+  - ".github/actions/**"
