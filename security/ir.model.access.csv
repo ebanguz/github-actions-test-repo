@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_nap_caja,nap.caja,model_nap_caja,base.group_user,1,1,1,1
+access_nap_puerto,nap.puerto,model_nap_puerto,base.group_user,1,1,1,1
+access_nap_olt,nap.olt,model_nap_olt,base.group_user,1,1,1,1
+access_nap_splitter,nap.splitter,model_nap_splitter,base.group_user,1,1,1,1
+access_nap_mufa,nap.mufa,model_nap_mufa,base.group_user,1,1,1,1

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+
+		<record id="olt_tree_view" model="ir.ui.view">
+			<field name="name">nap.olt.tree</field>
+			<field name="model">nap.olt</field>
+			<field name="arch" type="xml">
+				<tree string="OLT" editable="bottom">
+					<field name="name"/>
+				</tree>
+			</field>
+		</record>
+
+		<record id="olt_act_window" model="ir.actions.act_window">
+			<field name="name">OLT</field>
+			<field name="res_model">nap.olt</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem name="OLT" id="olt_menu" parent="nap.menu" action="olt_act_window"/>
+
+	</data>
+</odoo>

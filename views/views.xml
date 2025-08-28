@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record model="ir.ui.view" id="nap_caja_list">
+			<field name="name">nap.caja.list</field>
+			<field name="model">nap.caja</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="name"/>
+					<field name="latitud"/>
+					<field name="longitud"/>
+					<field name="olt_id"/>
+
+					<field name="mufa_id"/>
+					<field name="pon"/>
+					<field name="board"/>
+					<field name="puerto_ids" widget="many2many_tags"
+					       options="{'color_field': 'color', 'no_create_edit': True}"
+					/>
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="nap_caja_form">
+			<field name="name">nap.caja.form</field>
+			<field name="model">nap.caja</field>
+			<field name="arch" type="xml">
+				<form>
+					<sheet>
+						<div class="oe_title">
+							<label for="name"/>
+							<h1>
+								<field name="name" placeholder="Codigo de Caja"/>
+							</h1>
+						</div>
+						<group>
+							<group>
+								<field name="mufa_id"/>
+								<field name="latitud" placeholder="Latitud"/>
+								<field name="longitud" placeholder="Longitud"/>
+								<field name="coordenadas" widget="url"/>
+
+
+							</group>
+							<group>
+								<field name="pon"/>
+								<field name="board"/>
+								<field name="olt_id"/>
+								<field name="cantidad_puertos"/>
+							</group>
+						</group>
+						<notebook>
+							<page string="Puertos">
+								<field name="puerto_ids">
+									<tree editable="bottom" string="Puertos">
+										<field name="numero" string="Código"/>
+										<field name="name"/>
+										<field name="is_ocupado" widget="badge" string="Estado"
+										       decoration-success="is_ocupado == 'Disponible'"
+										       decoration-danger="is_ocupado != 'Disponible'"
+										/>
+										<field name="cliente_id" string="Cliente Asignado"/>
+										<field name="status_of_cliente_id" readonly="True"/>
+										<field name="contract_id" string="Contrato Asignado" readonly="not cliente_id"
+										       domain="[('partner_id', '=', cliente_id )]"/>
+									</tree>
+								</field>
+							</page>
+						</notebook>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+
+		<record model="ir.actions.act_window" id="nap.action_window">
+			<field name="name">Gestion de Red</field>
+			<field name="res_model">nap.caja</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem name="Gestion de Red" id="nap.menu" action="nap.action_window"/>
+
+	</data>
+</odoo>

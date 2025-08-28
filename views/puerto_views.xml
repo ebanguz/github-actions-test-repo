@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<!-- List View -->
+		<record model="ir.ui.view" id="nap_puerto_list">
+			<field name="name">nap.puerto.list</field>
+			<field name="model">nap.puerto</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="name"/>
+					<field name="numero" width="40px;"/>
+					<!--					<field name="caja_id"/>-->
+					<field name="ocupado"/>
+					<field name="cliente_id"/>
+					<field name="contract_id" readonly="not cliente_id" domain="[('partner_id', '=', cliente_id )]"/>
+				</tree>
+			</field>
+		</record>
+
+		<!-- Form View -->
+		<record model="ir.ui.view" id="nap_puerto_form">
+			<field name="name">nap.puerto.form</field>
+			<field name="model">nap.puerto</field>
+			<field name="arch" type="xml">
+				<form>
+					<sheet>
+						<group>
+							<group>
+								<field name="name" readonly="True"/>
+								<field name="cliente_id"/>
+								<!--								<field name="caja_id" invisible="cliente_id != 'subnap'"/>-->
+							</group>
+							<group>
+								<field name="numero" readonly="True"/>
+								<field name="ocupado"/>
+								<!--                                invisible="[('cliente_id', '!=', 'subnap')], 'required': [('cliente_id', '=', 'subnap')]"-->
+							</group>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<!-- Action Window -->
+		<record model="ir.actions.act_window" id="nap_puerto_action">
+			<field name="name">Puertos NAP</field>
+			<field name="res_model">nap.puerto</field>
+			<field name="view_mode">form</field>
+		</record>
+
+		<!-- Menu Item -->
+		<!--		<menuitem name="Puertos NAP" id="nap_puerto_menu" action="nap_puerto_action"/>-->
+	</data>
+</odoo>

@@ -1,0 +1,25 @@
+/** @odoo-module **/
+
+import { CharField } from "@web/views/fields/char/char_field";
+import { registry } from "@web/core/registry";
+
+export class CoordinateMaskWidget extends CharField {
+    mounted() {
+        super.mounted();
+
+        const input = this.el.querySelector("input");
+        if (input && window.Inputmask) {
+            const mask = new window.Inputmask({
+                mask: "99.999999,-99.999999",
+                placeholder: "_",
+                showMaskOnHover: false,
+                showMaskOnFocus: true,
+                greedy: false,
+            });
+
+            mask.mask(input);
+        }
+    }
+}
+
+registry.category("fields").add("coordinate_mask", CoordinateMaskWidget);

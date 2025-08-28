@@ -1,0 +1,6 @@
+.column-coord {
+    width: 100%px !important;
+    max-width: 300px !important;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

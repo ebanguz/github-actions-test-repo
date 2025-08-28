@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+
+		<record id="mufa_form_view" model="ir.ui.view">
+			<field name="name">nap.mufa.form</field>
+			<field name="model">nap.mufa</field>
+			<field name="arch" type="xml">
+				<form string="Mufa">
+					<sheet>
+						<div class="oe_title">
+							<label for="name"/>
+							<h1>
+								<field name="name" placeholder="Codigo"/>
+							</h1>
+						</div>
+						<group>
+							<group>
+								<field name="latitud" placeholder="Latitud"/>
+								<field name="longitud" placeholder="Longitud"/>
+								<field name="coordenadas" widget="url"/>
+								<field name="splitter_id"/>
+							</group>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record id="mufa_tree_view" model="ir.ui.view">
+			<field name="name">nap.mufa.tree</field>
+			<field name="model">nap.mufa</field>
+			<field name="arch" type="xml">
+				<tree string="Mufas" editable="bottom">
+					<field name="name"/>
+					<field name="latitud" placeholder="Latitud"/>
+					<field name="longitud" placeholder="Longitud"/>
+					<field name="coordenadas" widget="url"/>
+					<field name="splitter_id" widget="many2many_tags"/>
+				</tree>
+			</field>
+		</record>
+
+		<record id="mufa_act_window" model="ir.actions.act_window">
+			<field name="name">Mufas</field>
+			<field name="res_model">nap.mufa</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem name="Mufas" id="mufa_menu" parent="nap.menu" action="mufa_act_window"/>
+
+	</data>
+</odoo>
